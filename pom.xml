@@ -15,17 +15,18 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>User</name>
     <description>User project for Spring Boot</description>
+    <packaging>war</packaging> <!-- Changed to WAR -->
 
     <properties>
         <java.version>17.0.8.1</java.version>
     </properties>
 
     <dependencies>
-        <dependency> 
-            <groupId>net.coobird</groupId> 
-            <artifactId>thumbnailator</artifactId> 
-            <version>0.4.14</version> 
-        </dependency> 
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.14</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -35,24 +36,21 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.zxing</groupId>    
+            <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
             <version>3.5.1</version>
         </dependency>
-        
         <dependency>
-            <groupId>com.google.zxing</groupId>    
+            <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
             <version>3.5.1</version>
         </dependency>
-        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -80,6 +78,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Add servlet dependency for WAR -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -96,11 +101,22 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+            <!-- Add Maven WAR plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <!-- Add Profile to Skip Tests -->
     <profiles>
         <profile>
             <id>skip-tests</id>
@@ -112,6 +128,4 @@
             </properties>
         </profile>
     </profiles>
-
 </project>
-
